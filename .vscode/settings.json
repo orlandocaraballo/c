@@ -6,6 +6,7 @@
     "initializer_list": "c",
     "string_view": "c",
     "utility": "c",
-    "valarray": "c"
+    "valarray": "c",
+    "chrono": "c"
   }
 }
