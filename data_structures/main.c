@@ -4,9 +4,11 @@
 
 int main() {
   int i;
-  Stack *stack = (Stack *) malloc(sizeof(Stack));
 
-  initialize(stack);
+  // create the stack
+  Stack *stack = initialize_stack();
+
+  // pushes elements onto the top of the stack
   push(stack, 90);
   push(stack, -1);
   push(stack, -33);
@@ -18,6 +20,7 @@ int main() {
   
   // printf("The number popped from the stack is: %d\n", pop(stack));
   
+  // pop some items from the top of the stack
   pop(stack);
   pop(stack);
 
