@@ -12,8 +12,7 @@ Stack* initialize_stack() {
   stack->count = 0;
   stack->size = 0;
   stack->multiplier = 2;
-  stack->current = NULL;
-  
+
   return stack;
 }
 
@@ -49,7 +48,6 @@ void push(Stack *stack, int value) {
   // add the value to the end of the inner array
   stack->values[stack->count] = value;
   stack->count++;
-  stack->current = &stack->values[stack->count - 1];
 }
 
 // returns the element at the top of the stack
@@ -102,6 +100,11 @@ int calculate_new_size(Stack *stack) {
   return new_size;
 }
 
+// checks to see if the stack is empty
 static bool is_empty(Stack *stack) {
   return stack->size == 0;
+}
+
+static void on_first_push(Stack *stack) {
+  
 }
