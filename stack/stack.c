@@ -16,27 +16,6 @@ Stack* initialize_stack() {
   return stack;
 }
 
-// increases the size of the inner array
-void grow(Stack *stack) {
-  // get the new size of the inner array
-  int larger_size = calculate_new_size(stack);
-
-  // create a new array
-  int *larger_array = (int *) calloc(larger_size, sizeof(int));
-  int i;
-
-  // fill the new array with the data from the old array
-  for(i = 0; i < stack->size; i++) {
-    larger_array[i] = stack->values[i];
-  }
-
-  // set the values pointer to the new array
-  stack->values = larger_array;
-
-  // set the new size of the array to the larger size
-  stack->size = larger_size;
-}
-
 // push items into the stack
 void push(Stack *stack, int value) {
   // grow the stack if the inner array is full
@@ -105,6 +84,23 @@ static bool is_empty(Stack *stack) {
   return stack->size == 0;
 }
 
-static void on_first_push(Stack *stack) {
-  
+// increases the size of the inner array
+static void grow(Stack *stack) {
+  // get the new size of the inner array
+  int larger_size = calculate_new_size(stack);
+
+  // create a new array
+  int *larger_array = (int *) calloc(larger_size, sizeof(int));
+  int i;
+
+  // fill the new array with the data from the old array
+  for(i = 0; i < stack->size; i++) {
+    larger_array[i] = stack->values[i];
+  }
+
+  // set the values pointer to the new array
+  stack->values = larger_array;
+
+  // set the new size of the array to the larger size
+  stack->size = larger_size;
 }

@@ -10,7 +10,6 @@ typedef struct _stack {
 
 // define our stack helper function signatures
 Stack* initialize_stack();
-void grow(Stack *);
 void push(Stack *, int);
 int peek(Stack *);
 int pop(Stack *);
@@ -19,3 +18,4 @@ int pop(Stack *);
 static int calculate_new_size(Stack *);
 static bool is_empty(Stack *);
 static void on_first_push(Stack *);
+static void grow(Stack *);
