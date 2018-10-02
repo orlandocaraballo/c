@@ -8,6 +8,7 @@
     "utility": "c",
     "valarray": "c",
     "chrono": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "stdbool.h": "c"
   }
 }

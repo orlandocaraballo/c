@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "stack.h"
 
 // creates the Stack
@@ -11,6 +12,7 @@ Stack* initialize_stack() {
   stack->count = 0;
   stack->size = 0;
   stack->multiplier = 2;
+  stack->current = NULL;
   
   return stack;
 }
@@ -47,12 +49,13 @@ void push(Stack *stack, int value) {
   // add the value to the end of the inner array
   stack->values[stack->count] = value;
   stack->count++;
+  stack->current = &stack->values[stack->count - 1];
 }
 
 // returns the element at the top of the stack
 int peek(Stack *stack) {
   // let the user know they can't peek with no data
-  if(stack->count == 0) {
+  if(is_empty(stack)) {
     printf("You cannot peek with no data stored in the stack\n");
     exit(1);
   }
@@ -64,7 +67,7 @@ int peek(Stack *stack) {
 //  and returns the element from the function
 int pop(Stack *stack) {
   // let the user know they can't pop with no data
-  if(stack->count == 0) {
+  if(is_empty(stack)) {
     printf("You cannot pop with no data stored in the stack\n");
     exit(1);
   }
@@ -88,7 +91,7 @@ int pop(Stack *stack) {
 int calculate_new_size(Stack *stack) {
   int new_size;
 
-  if(stack->size == 0) {
+  if(is_empty(stack)) {
     // if the stack is empty then set the size to 1
     new_size = 1;
   } else {
@@ -97,4 +100,8 @@ int calculate_new_size(Stack *stack) {
   }
 
   return new_size;
+}
+
+static bool is_empty(Stack *stack) {
+  return stack->size == 0;
 }
