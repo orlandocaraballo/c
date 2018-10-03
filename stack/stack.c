@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "stack.h"
+#include "../error.h"
 
 // make static to scope function to definition file
 static int calculate_new_size(Stack *stack);
@@ -37,8 +38,9 @@ void push(Stack *stack, int value) {
 int peek(Stack *stack) {
   // let the user know they can't peek with no data
   if(is_empty(stack)) {
-    printf("You cannot peek with no data stored in the stack\n");
-    exit(1);
+    print_error_and_exit(
+      "You cannot peek with no data stored in the stack",
+    1);
   }
 
   return stack->values[stack->count - 1];
@@ -49,8 +51,9 @@ int peek(Stack *stack) {
 int pop(Stack *stack) {
   // let the user know they can't pop with no data
   if(is_empty(stack)) {
-    printf("You cannot pop with no data stored in the stack\n");
-    exit(1);
+    print_error_and_exit(
+      "You cannot pop with no data stored in the stack",
+    1);
   }
 
   int current_index = stack->count - 1;

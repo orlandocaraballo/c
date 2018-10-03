@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "stack.h" 
+#include "stack.h"
+#include "../error.h"
 
 int main(int argument_count, char **argument_values) {
   // create the stack
@@ -15,8 +16,9 @@ int main(int argument_count, char **argument_values) {
     }
   } else {
     // kick the user out if the argument was not passed in
-    printf("You must pass in a number of items to push into the stack\n");
-    exit(1);
+    print_error_and_exit(
+      "You must pass in a number of items to push into the stack",
+    1);
   }
 
   for(int i = 0; i < stack->count; i++) {
