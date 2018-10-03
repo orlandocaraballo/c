@@ -12,6 +12,8 @@ main.o: main.c
 queue.o: queue.c queue.h
 	gcc -Wall -c queue.c
 
+# compiles error.c when either
+#		error.h or error.c change
 error.o: ../error.c ../error.h
 	gcc -Wall -c ../error.c -o ../error.o
 
