@@ -1,5 +1,3 @@
-#include <stdbool.h>
-
 // define our stack struct
 typedef struct Stack {
   int *values;
