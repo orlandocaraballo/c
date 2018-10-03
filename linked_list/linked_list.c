@@ -31,11 +31,11 @@ void add(LinkedList *list, int value) {
     return;
   }
 
-  Node *node;
+  Node *node = list->head;
 
-  do {
-    node = list->head;
-  } while(node->next);
+  while(node->next) {
+    node = node->next;
+  }
 
 
   node->next = initialize_node(value);
