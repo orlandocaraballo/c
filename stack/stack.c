@@ -3,6 +3,11 @@
 #include <stdbool.h>
 #include "stack.h"
 
+// make static to scope function to definition file
+static int calculate_new_size(Stack *stack);
+static bool is_empty(Stack *stack);
+static void grow(Stack *stack);
+
 // creates the Stack
 Stack* initialize_stack() {
   Stack *stack = (Stack *) malloc(sizeof(Stack));

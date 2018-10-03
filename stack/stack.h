@@ -1,10 +1,5 @@
 #include <stdbool.h>
 
-// the ifndef is for bypassing warning
-//  when loading header more than once
-#ifndef QUEUE
-#define QUEUE
-
 // define our stack struct
 typedef struct Stack {
   int *values;
@@ -17,10 +12,3 @@ Stack* initialize_stack();
 void push(Stack *stack, int value);
 int peek(Stack *stack);
 int pop(Stack *stack);
-
-// make static to scope function to definition file
-static int calculate_new_size(Stack *stack);
-static bool is_empty(Stack *stack);
-static void grow(Stack *stack);
-
-#endif
