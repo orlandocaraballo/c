@@ -9,6 +9,7 @@
     "valarray": "c",
     "chrono": "c",
     "stdio.h": "c",
-    "stdbool.h": "c"
+    "stdbool.h": "c",
+    "error.h": "c"
   }
 }
