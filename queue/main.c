@@ -1,15 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "queue.h" 
+#include "queue.h"
+#include "../error.h"
 
 int main(int argument_count, char **argument_values) {
   Queue *queue = initialize_queue(); 
 
   // kick the user out if the argument was not passed in
   if(argument_count < 2) {
-    printf("You must pass in a number of items to enqueue into the queue\n");
-    exit(1);
+    print_error_and_exit(
+      "You must pass in a number of items to enqueue into the queue",
+    1);
   }
 
   for(int i = 0; i < atoi(argument_values[1]); ++i) {

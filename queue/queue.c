@@ -1,6 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "queue.h"
+
+// make static to scope function to definition file
+static int calculate_new_size(Queue *queue);
+static bool is_empty(Queue *queue);
+static void grow(Queue *queue);
 
 // create our queue
 Queue* initialize_queue() {
@@ -93,7 +99,7 @@ static void grow(Queue *queue) {
   // on the first pass, the first argument is NULL therefore it will
   //  behave very much like a malloc
   // every other pass after this will try to reallocate the amount of
-  //  already set for stack->values to a larger size
+  //  already set for queue->values to a larger size
   queue->values = (int *) realloc(queue->values, larger_size * sizeof(int));
 
   // set the new size of the array to the larger size
