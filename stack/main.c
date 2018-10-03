@@ -1,31 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.h"
+#include <string.h>
+#include "stack.h" 
 
-int main() {
-  int i;
-
+int main(int argument_count, char **argument_values) {
   // create the stack
   Stack *stack = initialize_stack();
 
-  // pushes elements onto the top of the stack
-  push(stack, 90);
-  push(stack, -1);
-  push(stack, -33);
-  push(stack, 4);
-  push(stack, -13);
-  push(stack, 11);
-  push(stack, -9);
-  push(stack, 100);
+  // check to see if an argument was passed in
+  if(argument_count > 1) {
+    for(int i = 0; i < atoi(argument_values[1]); i++) {
+      // push a random value between 1 and 100
+      push(stack, rand() % 100);
+    }
+  } else {
+    // kick the user out if the argument was not passed in
+    printf("You must pass in a number of items to push into the stack\n");
+    exit(1);
+  }
 
-  
-  // printf("The number popped from the stack is: %d\n", pop(stack));
-  
-  // pop some items from the top of the stack
-  pop(stack);
-  pop(stack);
-
-  for(i = 0; i < stack->size; i++) {
+  for(int i = 0; i < stack->count; i++) {
     printf("The current element on index [%d] is: %d\n", i, stack->values[i]);
   }
 

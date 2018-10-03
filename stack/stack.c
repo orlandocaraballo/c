@@ -11,7 +11,6 @@ Stack* initialize_stack() {
   stack->values = NULL;
   stack->count = 0;
   stack->size = 0;
-  stack->multiplier = 2;
 
   return stack;
 }
@@ -65,15 +64,15 @@ int pop(Stack *stack) {
 }
 
 // calculates new inner array size
-int calculate_new_size(Stack *stack) {
+static int calculate_new_size(Stack *stack) {
   int new_size;
 
   if(is_empty(stack)) {
     // if the stack is empty then set the size to 1
     new_size = 1;
   } else {
-    // otherwise set the new size based on the multiplier
-    new_size = stack->multiplier * stack->size;
+    // otherwise the size should be set to double the prior size
+    new_size = 2 * stack->size;
   }
 
   return new_size;
@@ -89,17 +88,11 @@ static void grow(Stack *stack) {
   // get the new size of the inner array
   int larger_size = calculate_new_size(stack);
 
-  // create a new array
-  int *larger_array = (int *) calloc(larger_size, sizeof(int));
-  int i;
-
-  // fill the new array with the data from the old array
-  for(i = 0; i < stack->size; i++) {
-    larger_array[i] = stack->values[i];
-  }
-
-  // set the values pointer to the new array
-  stack->values = larger_array;
+  // on the first pass, the first argument is NULL therefore it will
+  //  behave very much like a malloc
+  // every other pass after this will try to reallocate the amount of
+  //  already set for stack->values to a larger size
+  stack->values = (int *) realloc(stack->values, larger_size * sizeof(int));
 
   // set the new size of the array to the larger size
   stack->size = larger_size;
