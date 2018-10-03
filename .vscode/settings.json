@@ -10,6 +10,7 @@
     "chrono": "c",
     "stdio.h": "c",
     "stdbool.h": "c",
-    "error.h": "c"
+    "error.h": "c",
+    "linked_list.h": "c"
   }
 }
