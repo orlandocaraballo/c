@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "queue.h"
+#include "../error.h"
 
 // make static to scope function to definition file
 static int calculate_new_size(Queue *queue);
@@ -10,8 +11,10 @@ static void grow(Queue *queue);
 
 // create our queue
 Queue* initialize_queue() {
+  // allocate enough space for a queue struct
   Queue *queue = (Queue *) malloc(sizeof(Queue));
 
+  // set our initial values
   queue->values = NULL;
   queue->count = 0;
   queue->size = 0; 
@@ -19,6 +22,7 @@ Queue* initialize_queue() {
   return queue;
 }
 
+// add a new value to the rear of the queue
 void enqueue(Queue *queue, int value) {
   // grow the stack if the inner array is full
   //  of data
@@ -58,8 +62,9 @@ int dequeue(Queue *queue) {
 // find the rear of the queue
 int rear(Queue *queue) {
   if(is_empty(queue)) {
-    printf("You cannot find the rear of a queue with no items");
-    exit(1);
+    print_error_and_exit(
+      "You cannot find the front of a queue with no items",
+    1);
   }
 
   return queue->values[0];
@@ -67,9 +72,11 @@ int rear(Queue *queue) {
 
 // find the front of the queue
 int front(Queue *queue) {
+  // kick the user out if there are no items in the queue
   if(is_empty(queue)) {
-    printf("You cannot find the front of a queue with no items");
-    exit(1);
+    print_error_and_exit(
+      "You cannot find the front of a queue with no items",
+    1);
   }
 
   return queue->values[queue->count - 1];
