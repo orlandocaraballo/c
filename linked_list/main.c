@@ -1,17 +1,20 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "linked_list.h"
+#include "../error.h"
 
 int main(int argument_count, char **argument_values) {
   LinkedList *list = initialize_linked_list();
 
-  add(list, 5);
-  add(list, 6);
-  add(list, 10);
-  add(list, 200);
+  if(argument_count < 2) {
+    print_error_and_exit("You must provide an argument.", 1);
+  }
 
-  // list->head->next = initialize_node(6);
+  for(int i = 0; i < atoi(argument_values[1]); ++i) {
+    add(list, rand() % 100 + 1);
+  }
 
-  // printf("%d", list->head->next->value);
   display(list);
 
   return 0;

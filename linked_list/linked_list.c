@@ -37,7 +37,6 @@ void add(LinkedList *list, int value) {
     node = node->next;
   }
 
-
   node->next = initialize_node(value);
 }
 
