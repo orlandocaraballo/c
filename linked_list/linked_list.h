@@ -5,12 +5,13 @@ typedef struct Node {
 
 typedef struct LinkedList {
   Node *head;
-  int count;
-  int size;
+  Node *tail;
 } LinkedList;
 
 // setup our list function prototypes
 LinkedList* initialize_linked_list();
 Node* initialize_node(int value);
-void add(LinkedList *list, int value);
+void add_to_tail(LinkedList *list, int value);
+void add_to_tail_thru_head(LinkedList *list, int value);
+void add_to_head(LinkedList *list, int value);
 void display(LinkedList *list);

@@ -17,13 +17,13 @@ LinkedList* initialize_linked_list() {
   LinkedList *list = (LinkedList *) malloc(sizeof(LinkedList));
 
   list->head = NULL;
-  list->count = 0;
-  list->size = 0;
+  list->tail = NULL;
 
   return list;
 }
 
-void add(LinkedList *list, int value) {
+// O(n) complexity
+void add_to_tail_thru_head(LinkedList *list, int value) {
   // create the head node if list is empty
   if(is_empty(list)) {
     list->head = initialize_node(value);
@@ -40,16 +40,46 @@ void add(LinkedList *list, int value) {
   node->next = initialize_node(value);
 }
 
+// O(1) complexity
+void add_to_tail(LinkedList *list, int value) {
+  // create the head node if list is empty
+  if(is_empty(list)) {
+    list->head = initialize_node(value);
+    list->tail = list->head;
+
+    return;
+  }
+
+  Node *new_node = initialize_node(value);
+  list->tail->next = new_node;
+  list->tail = new_node;
+}
+
+// O(1) complexity
+void add_to_head(LinkedList *list, int value) {
+  if(is_empty(list)) {
+    list->head = initialize_node(value);
+    list->tail = list->head;
+
+    return;
+  }
+
+  Node *old_head_ptr = list->head;
+  list->head = initialize_node(value);
+  list->head->next = old_head_ptr;
+}
+
+// O(n) complexity
 void display(LinkedList *list) {
   if(is_empty(list)) {
     printf("The linked list is empty");
   }
 
-  int count = 0;
-
-  for(Node *node = list->head; node != NULL; node = node->next, count++) {
-    printf("The current node at index [%d] is %d\n", count, node->value);
+  for(Node *node = list->head; node != NULL; node = node->next) {
+    printf("%d -> ", node->value);
   }
+
+  printf("NULL\n");
 }
 
 bool is_empty(LinkedList *list) {
