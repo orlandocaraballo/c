@@ -14,10 +14,12 @@ typedef struct Expression {
 
 // forward declarations
 char ** tokenize(char *command_string);
-Expression* parse_response(char *response);
+Expression* convert_tokens_to_expression(char **tokens);
+void execute_command(StackAsLinkedList *stack, Expression *expression);
 
 int main() {
   StackAsLinkedList *stack = initialize_stack_as_linked_list();
+  Expression *expression;
   bool keep_going = true;
   const int MAX_SIZE = 20;
 
@@ -31,54 +33,77 @@ int main() {
     printf("isall> ");
     fgets(response, MAX_SIZE, stdin);
 
-    parse_response(response);
+    // tokenize input and create expression
+    expression = convert_tokens_to_expression(tokenize(response));
+
+    // if the first token found is NULL then jump to the next iteration
+    if(expression->command == NULL) {
+      printf("Sorry your input was incorrect, please try again.\n");
+      continue;
+    } else if(strcmp(expression->command, "q") == 0 || strcmp(expression->command, "quit") == 0) {
+      printf("Exiting...\n");
+      exit(2);
+    }
+
+    execute_command(stack, expression);
+    // printf("%s %d\n", expression->command, expression->value);
   }
 
   return 0;
 }
 
-// return an array of strings
-Expression* parse_response(char *response) {
+// TODO: need to clean up this method, it seems inefficient
+// tokenize command string based on some rules defined in the function
+char** tokenize(char *command_string) {
+  // only look for spaces and newline
   const char *DELIMITER = " \n";
+
+  // only go up until 2 tokens have been found then stop
   const char MAX_TOKEN_AMOUNT = 2;
-  Expression *expression = (Expression *) malloc(sizeof(Expression));
-  char *token = strtok(response, DELIMITER);
-  char tokens[MAX_TOKEN_AMOUNT];
+  
+  // store only 2 tokens
+  char **tokens= (char **) calloc(MAX_TOKEN_AMOUNT, sizeof(char *));
 
-  expression->command = token;
+  // get the first token and store it within the tokens string array
+  char *token = strtok(command_string, DELIMITER);
+  tokens[0] = token;
 
-  for(int i = 0; (token != NULL) || (i < MAX_TOKEN_AMOUNT - 1); i++) {
-    printf("%s\n", token);
+  for(int i = 1; (token != NULL) || (i < MAX_TOKEN_AMOUNT); i++) {
     token = strtok(NULL, DELIMITER);
+    tokens[i] = token;
   }
 
-  sscanf(token, "%d", &(expression->value));
+  return tokens;
+}
+
+// converts tokens array to an expression
+Expression* convert_tokens_to_expression(char** tokens) {
+  Expression *expression = (Expression *) malloc(sizeof(Expression));
+
+  expression->command = tokens[0];
+
+  // only set expression value to something
+  //  if it exists
+  if(tokens[1] != NULL) {
+    // use sscanf to convert string buffer to int
+    sscanf(tokens[1], "%d", &expression->value);
+  } else {
+    expression->value = 0;
+  }
 
   return expression;
 }
 
-char** tokenize(char *command_string) {
-
-  for(int i = 0; (token != NULL) || (i < MAX_TOKEN_AMOUNT - 1); i++) {
-    printf("%s\n", token);
-    token = strtok(NULL, DELIMITER);
+// run command defined by the expression
+void execute_command(StackAsLinkedList *stack, Expression *expression) {
+  if(strcmp(expression->command, "push") == 0) {
+    push(stack, expression->value);
+    printf("The value [ %d ] is pushed on top of the stack\n", expression->value);
+  } else if(strcmp(expression->command, "peek") == 0){
+    printf("The value on top of the stack is [ %d ]\n", peek(stack));
+  } else if(strcmp(expression->command, "pop") == 0){
+    printf("The value retrived from the top of the stack is [ %d ]\n", pop(stack));
+  } else {
+    printf("Unrecognized command.\n");
   }
 }
-
-
-
-// Expression* parse_response(char *response) {
-//   Expression *expression = NULL;
-//   char *token = NULL;
-//   const DELIMITER = " ";
-
-//   // get the token and loop until there are
-//   //  no more tokens
-//   while(token != NULL) {
-//     token = strtok(response, DELIMITER);
-
-//   }
-  
-  
-//   return expression;
-// }

@@ -1,3 +1,6 @@
 *.o
 stack
 queue
+isall
+stack_as_linked_list
+*debug
