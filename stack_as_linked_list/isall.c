@@ -16,6 +16,10 @@ typedef struct Expression {
 char ** tokenize(char *command_string);
 Expression* convert_tokens_to_expression(char **tokens);
 void execute_command(StackAsLinkedList *stack, Expression *expression);
+void execute_push_command(StackAsLinkedList *stack, int value);
+void execute_peek_command(StackAsLinkedList *stack);
+void execute_pop_command(StackAsLinkedList *stack);
+
 
 int main() {
   StackAsLinkedList *stack = initialize_stack_as_linked_list();
@@ -45,8 +49,8 @@ int main() {
       exit(2);
     }
 
+    // runs the command
     execute_command(stack, expression);
-    // printf("%s %d\n", expression->command, expression->value);
   }
 
   return 0;
@@ -77,6 +81,7 @@ char** tokenize(char *command_string) {
 }
 
 // converts tokens array to an expression
+//  expression->value is set to -1 if no second token is found
 Expression* convert_tokens_to_expression(char** tokens) {
   Expression *expression = (Expression *) malloc(sizeof(Expression));
 
@@ -97,13 +102,46 @@ Expression* convert_tokens_to_expression(char** tokens) {
 // run command defined by the expression
 void execute_command(StackAsLinkedList *stack, Expression *expression) {
   if(strcmp(expression->command, "push") == 0) {
-    push(stack, expression->value);
-    printf("The value [ %d ] is pushed on top of the stack\n", expression->value);
+    execute_push_command(stack, expression->value);
   } else if(strcmp(expression->command, "peek") == 0){
-    printf("The value on top of the stack is [ %d ]\n", peek(stack));
+    execute_peek_command(stack);
   } else if(strcmp(expression->command, "pop") == 0){
-    printf("The value retrived from the top of the stack is [ %d ]\n", pop(stack));
+    execute_pop_command(stack);
   } else {
     printf("Unrecognized command.\n");
   }
+}
+
+// runs the push command
+void execute_push_command(StackAsLinkedList *stack, int value) {  
+  push(stack, value);
+  printf("The value [ %d ] is pushed on top of the stack\n", value);
+}
+
+// runs the peek command
+//  displays a message to stderr if stack is empty
+void execute_peek_command(StackAsLinkedList *stack) {
+  int command_return_value = peek(stack);
+
+  // if the peek returns -1 then there must be nothing in the stack
+  if(command_return_value == -1) {
+    print_error("You cannot peek with no data stored in the stack");
+    return;
+  }
+
+  printf("The value on top of the stack is [ %d ]\n", command_return_value);
+}
+
+// runs the pop command
+//  displays a message to stderr if stack is empty
+void execute_pop_command(StackAsLinkedList *stack) {
+  int command_return_value = pop(stack);
+
+  // if the pop returns -1 then there must be nothing in the stack
+  if(command_return_value == -1) {
+    print_error("You cannot pop with no data stored in the stack");
+    return;
+  }
+
+  printf("The value retrived from the top of the stack is [ %d ]\n", command_return_value);
 }

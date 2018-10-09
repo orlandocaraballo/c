@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "stack.h"
+#include "stack_as_array.h"
 #include "../error.h"
 
 // make static to scope function to definition file

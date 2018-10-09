@@ -12,6 +12,7 @@
     "stdbool.h": "c",
     "error.h": "c",
     "linked_list.h": "c",
-    "stack_as_linked_list.h": "c"
+    "stack_as_linked_list.h": "c",
+    "system_error": "c"
   }
 }
