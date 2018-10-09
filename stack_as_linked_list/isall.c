@@ -33,6 +33,7 @@ int main() {
   printf("Enter a command:\n\n");
 
   while(true) {
+    // display interactive command line text
     printf("isall> ");
     fgets(response, MAX_SIZE, stdin);
 
