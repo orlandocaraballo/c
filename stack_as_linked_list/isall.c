@@ -24,7 +24,6 @@ void execute_pop_command(StackAsLinkedList *stack);
 int main() {
   StackAsLinkedList *stack = initialize_stack_as_linked_list();
   Expression *expression;
-  bool keep_going = true;
   const int MAX_SIZE = 20;
 
   // set response length to 20 for now
@@ -33,7 +32,7 @@ int main() {
   printf("Welcome to interactive stack as linked list.\n");
   printf("Enter a command:\n\n");
 
-  while(keep_going) {
+  while(true) {
     printf("isall> ");
     fgets(response, MAX_SIZE, stdin);
 
@@ -45,8 +44,8 @@ int main() {
       printf("Sorry your input was incorrect, please try again.\n");
       continue;
     } else if(strcmp(expression->command, "q") == 0 || strcmp(expression->command, "quit") == 0) {
-      printf("Exiting...\n");
-      exit(2);
+      // if person enters q or quit then exit the program
+      print_error_and_exit("Exiting...", 2);
     }
 
     // runs the command
