@@ -51,6 +51,10 @@ int main() {
 
     // runs the command
     execute_command(stack, expression);
+
+    // make sure to free our expression before resetting it
+    //  in the next iteration of the loop
+    free(expression);
   }
 
   return 0;
