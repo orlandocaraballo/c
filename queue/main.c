@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "queue.h"
 #include "../error.h"
 
 int main(int argument_count, char **argument_values) {
-  Queue *queue = initialize_queue(); 
+  Queue *queue = initialize_queue();
+
+  // use the current time as the seed
+  //  for random function used below
+  srand(time(NULL));
 
   // kick the user out if the argument was not passed in
   if(argument_count < 2) {
@@ -16,7 +21,7 @@ int main(int argument_count, char **argument_values) {
 
   for(int i = 0; i < atoi(argument_values[1]); ++i) {
     // enqueue a random value between 1 and the 100
-    enqueue(queue, rand() % 100);
+    enqueue(queue, rand() % 100 + 1);
   }
 
   for(int i = 0; i < 3 ; ++i) {

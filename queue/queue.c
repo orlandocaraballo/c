@@ -24,7 +24,7 @@ Queue* initialize_queue() {
 
 // add a new value to the rear of the queue
 void enqueue(Queue *queue, int value) {
-  // grow the stack if the inner array is full
+  // grow the queue if the inner array is full
   //  of data
   if(queue->count == queue->size) {
     grow(queue);
@@ -38,9 +38,9 @@ void enqueue(Queue *queue, int value) {
 // removes the element at the front of the queue
 //  and returns the element from the function
 int dequeue(Queue *queue) {
-  // let the user know they can't pop with no data
+  // let the user know they can't dequeue with no data
   if(is_empty(queue)) {
-    printf("You cannot dequeue with no data stored in the stack\n");
+    printf("You cannot dequeue with no data stored in the queue\n");
     exit(1);
   }
 
@@ -52,7 +52,7 @@ int dequeue(Queue *queue) {
   // set the current last element to 0
   queue->values[current_index] = 0;
 
-  // reduce the stack count by 1
+  // reduce the queue count by 1
   queue->count--;
 
   // return the last element of the inner array
@@ -89,7 +89,7 @@ static bool is_empty(Queue *queue) {
 
 // calculates new inner array size
 static int calculate_new_size(Queue *queue) {
-  // if the stack is empty then set the size to 1
+  // if the queue is empty then set the size to 1
   if(is_empty(queue)) {
     return 1;
   } 

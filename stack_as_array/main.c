@@ -1,12 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "stack.h"
+#include <time.h>
+#include "stack_as_array.h"
 #include "../error.h"
 
 int main(int argument_count, char **argument_values) {
   // create the stack
   Stack *stack = initialize_stack();
+
+  // use the current time as the seed
+  //  for random function used below
+  srand(time(NULL));
 
   // check to see if an argument was passed in
   if(argument_count > 1) {
